@@ -1,0 +1,4 @@
+Marina’s Pastelería — primera versión funcional de interfaz.
+Incluye insumos, inventario local, recetas, calculadora básica y respaldo JSON.
+Los datos quedan guardados en el navegador del dispositivo. No hay nube, multiusuario ni autenticación segura todavía. No introduzcas datos sensibles.
+Para instalar como PWA se debe alojar por HTTPS con los tres archivos juntos.
