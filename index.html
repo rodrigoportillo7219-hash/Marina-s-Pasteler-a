@@ -1,24 +1,115 @@
-<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#405846"><link rel="manifest" href="manifest.webmanifest"><title>Marina’s Pastelería</title>
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#405846"><link rel="manifest" href="manifest.webmanifest">
+<title>Marina’s Pastelería</title>
 <style>
-:root{--cream:#f4eee2;--green:#405846;--gold:#c6a15b;--ink:#20231f;--line:#e5ddcf}*{box-sizing:border-box}body{margin:0;background:#f8f6f0;color:var(--ink);font:15px system-ui}header{background:var(--green);color:white;padding:20px}header h1{font:26px Georgia;margin:6px 0}nav{display:flex;overflow:auto;background:white;position:sticky;top:0;border-bottom:1px solid var(--line)}nav button{padding:13px;border:0;background:white;font-weight:600;white-space:nowrap}nav button.active{color:var(--green);border-bottom:3px solid var(--gold)}main{max-width:850px;margin:auto;padding:16px}h2{font:24px Georgia}.sub,.muted{color:#777;font-size:13px}.card{background:white;border:1px solid var(--line);border-radius:14px;padding:15px;margin:10px 0}.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.metric{font:25px Georgia;color:var(--green)}label{font-size:12px;font-weight:650}input,select,textarea{width:100%;padding:11px;border:1px solid var(--line);border-radius:9px;margin:5px 0 12px;font:inherit}.primary{background:var(--green);color:white;border:0;border-radius:9px;padding:11px 15px;font-weight:650}.secondary{background:var(--cream);border:1px solid var(--line);border-radius:9px;padding:10px}.danger{background:#fff0ed;color:#933;border:0;border-radius:8px;padding:7px}.item{display:flex;justify-content:space-between;gap:8px;padding:12px 0;border-bottom:1px solid var(--line)}.hidden{display:none!important}.total{background:var(--cream);padding:14px;border-radius:10px;margin-top:12px}@media(min-width:650px){.grid{grid-template-columns:repeat(4,1fr)}}
+:root{--cream:#f4eee2;--green:#405846;--gold:#c6a15b;--ink:#20231f;--line:#e5ddcf;--muted:#777}
+*{box-sizing:border-box}body{margin:0;background:#f8f6f0;color:var(--ink);font:15px system-ui,-apple-system,Segoe UI,sans-serif}
+header{background:var(--green);color:white;padding:20px}header small{color:#e9dfcc;letter-spacing:.08em}header h1{font:26px Georgia;margin:6px 0}header p{margin:0;color:#e9dfcc;font-size:13px}
+nav{display:flex;overflow:auto;background:white;position:sticky;top:0;z-index:2;border-bottom:1px solid var(--line)}
+nav button{padding:13px 15px;border:0;background:white;font-weight:650;white-space:nowrap;color:#555}nav button.active{color:var(--green);border-bottom:3px solid var(--gold)}
+main{max-width:900px;margin:auto;padding:16px}h2{font:24px Georgia;margin:7px 0}.sub,.muted{color:var(--muted);font-size:13px}
+.card{background:white;border:1px solid var(--line);border-radius:14px;padding:15px;margin:11px 0}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.metric{font:25px Georgia;color:var(--green)}label{font-size:12px;font-weight:650;color:#555}
+input,select,textarea{width:100%;padding:11px;border:1px solid var(--line);border-radius:9px;margin:5px 0 12px;font:inherit;background:white}
+.primary{background:var(--green);color:white;border:0;border-radius:9px;padding:11px 15px;font-weight:650}.secondary{background:var(--cream);border:1px solid var(--line);border-radius:9px;padding:10px;color:var(--green);font-weight:600}
+.danger{background:#fff0ed;color:#933;border:0;border-radius:8px;padding:7px}.item{display:flex;justify-content:space-between;gap:8px;align-items:center;padding:12px 0;border-bottom:1px solid var(--line)}
+.hidden{display:none!important}.total{background:var(--cream);padding:14px;border-radius:10px;margin-top:12px}.total strong{font:24px Georgia;color:var(--green)}
+.ingredient-row{display:grid;grid-template-columns:1.2fr .8fr auto;gap:7px;align-items:center}.ingredient-row select,.ingredient-row input{margin-bottom:8px}
+.note{border-left:3px solid var(--gold);padding:8px 11px;background:#fbf8f1;color:#555;font-size:12px;margin:10px 0}
+@media(min-width:650px){.grid{grid-template-columns:repeat(4,minmax(0,1fr))}}
 </style></head><body>
-<header><small>PASTELERÍA ARTESANAL · HECHO CON AMOR</small><h1>Marina’s Pastelería</h1><div>Tu taller, tus recetas y tus números en un solo lugar.</div></header>
-<nav><button class="active" data-tab="inicio">Inicio</button><button data-tab="insumos">Insumos</button><button data-tab="recetas">Recetas</button><button data-tab="costos">Costeo</button><button data-tab="respaldo">Respaldo</button></nav><main>
-<section id="inicio"><h2>Panel de trabajo</h2><p class="sub">Bienvenido a tu espacio de producción.</p><div class="grid"><div class="card">Insumos<div class="metric" id="mi">0</div></div><div class="card">Recetas<div class="metric" id="mr">0</div></div><div class="card">Valor inventario<div class="metric" id="mv">$0.00</div></div><div class="card">Costeos<div class="metric" id="mc">0</div></div></div><div class="card"><b>Primeros pasos</b><p class="sub">Registra insumos, crea recetas y calcula costos.</p><button class="primary" onclick="show('insumos')">Registrar primer insumo</button></div></section>
-<section id="insumos" class="hidden"><h2>Insumos e inventario</h2><p class="sub">Registra materias primas, precio y existencias.</p><div class="card"><b>Nuevo insumo</b><div class="grid"><div><label>Nombre</label><input id="iname" placeholder="Fresa fresca"></div><div><label>Unidad base</label><select id="unit"><option value="g">Gramo (g)</option><option value="ml">Mililitro (ml)</option><option value="unidad">Unidad</option></select></div><div><label>Precio de compra ($)</label><input id="price" type="number" min="0" step=".01"></div><div><label>Cantidad comprada en unidad base</label><input id="qty" type="number" min=".01" step=".01"></div><div><label>Existencia actual</label><input id="stock" type="number" min="0" step=".01"></div><div><label>Stock mínimo</label><input id="min" type="number" min="0" step=".01"></div></div><button class="primary" onclick="addI()">Guardar insumo</button></div><div class="card"><b>Mis insumos</b><div id="ilist" class="sub">Aún no hay insumos.</div></div></section>
-<section id="recetas" class="hidden"><h2>Recetario</h2><p class="sub">Guarda preparaciones y notas técnicas.</p><div class="card"><label>Nombre de receta</label><input id="rname" placeholder="Pastel de fresas con crema"><label>Descripción y notas</label><textarea id="rnotes" rows="3" placeholder="Rendimiento, proceso, conservación..."></textarea><button class="primary" onclick="addR()">Guardar receta</button></div><div class="card"><b>Mis recetas</b><div id="rlist" class="sub">Aún no hay recetas.</div></div></section>
-<section id="costos" class="hidden"><h2>Calculadora de costos</h2><p class="sub">Calcula el costo unitario de un insumo utilizado.</p><div class="card"><label>Insumo</label><select id="ci"></select><label>Cantidad utilizada (g/ml/unidades)</label><input id="used" type="number" min=".01" step=".01"><div class="grid"><div><label>Mano de obra ($)</label><input id="labor" type="number" value="0" min="0" step=".01"></div><div><label>Otros gastos ($)</label><input id="other" type="number" value="0" min="0" step=".01"></div><div><label>Porciones</label><input id="portions" type="number" value="1" min="1"></div><div><label>Margen (%)</label><input id="margin" type="number" value="50" min="0" max="99"></div></div><button class="primary" onclick="calc()">Calcular</button><div id="result" class="total hidden"></div></div><p class="sub">Versión inicial: calcula un insumo por operación. El costeo de recetas con múltiples ingredientes, empaques, energía y gastos generales será la siguiente ampliación.</p></section>
-<section id="respaldo" class="hidden"><h2>Respaldo</h2><div class="card"><p class="sub">Los datos se guardan en este navegador. Descarga una copia periódicamente.</p><button class="primary" onclick="backup()">Descargar respaldo JSON</button> <button class="secondary" onclick="document.getElementById('file').click()">Restaurar</button><input id="file" class="hidden" type="file" accept="application/json" onchange="restore(event)"></div></section>
-</main><script>
-const K='marinas_pasteleria_v1';let db=JSON.parse(localStorage.getItem(K)||'{"ingredients":[],"recipes":[]}');
-function save(){localStorage.setItem(K,JSON.stringify(db));render()}function show(id){document.querySelectorAll('main section').forEach(s=>s.classList.toggle('hidden',s.id!==id));document.querySelectorAll('nav button').forEach(b=>b.classList.toggle('active',b.dataset.tab===id));if(id==='costos')fill();}document.querySelectorAll('nav button').forEach(b=>b.onclick=()=>show(b.dataset.tab));
-function addI(){let n=iname.value.trim(),p=+price.value,q=+qty.value,s=+stock.value;if(!n||p<0||q<=0||s<0){alert('Completa los datos del insumo.');return}db.ingredients.push({id:Date.now(),name:n,unit:unit.value,price:p,qty:q,stock:s,min:+min.value||0,cost:p/q});['iname','price','qty','stock','min'].forEach(x=>document.getElementById(x).value='');save()}
-function addR(){let n=rname.value.trim();if(!n){alert('Escribe el nombre de la receta.');return}db.recipes.push({id:Date.now(),name:n,notes:rnotes.value});rname.value='';rnotes.value='';save()}
-function del(t,id){if(confirm('¿Eliminar registro?')){db[t]=db[t].filter(x=>x.id!==id);save()}}
+<header><small>PASTELERÍA ARTESANAL · HECHO CON AMOR</small><h1>Marina’s Pastelería</h1><p>Tu taller, tus recetas y tus números en un solo lugar.</p></header>
+<nav>
+<button class="active" data-tab="inicio">Inicio</button><button data-tab="insumos">Insumos</button><button data-tab="recetas">Recetas</button><button data-tab="costos">Costeo profesional</button><button data-tab="respaldo">Respaldo</button>
+</nav><main>
+<section id="inicio">
+<h2>Panel de trabajo</h2><p class="sub">Bienvenido a tu espacio de producción.</p>
+<div class="grid">
+<div class="card">Insumos<div class="metric" id="mi">0</div></div><div class="card">Recetas<div class="metric" id="mr">0</div></div>
+<div class="card">Valor inventario<div class="metric" id="mv">$0.00</div></div><div class="card">Recetas costeadas<div class="metric" id="mc">0</div></div>
+</div>
+<div class="card"><b>Primeros pasos</b><p class="sub">Registra insumos, crea recetas y calcula el costo completo de producción.</p><button class="primary" onclick="show('insumos')">Registrar primer insumo</button></div>
+</section>
+<section id="insumos" class="hidden">
+<h2>Insumos e inventario</h2><p class="sub">Registra materias primas, precio y existencias.</p>
+<div class="card"><b>Nuevo insumo</b><div class="grid">
+<div><label>Nombre</label><input id="iname" placeholder="Ej. Fresa fresca"></div>
+<div><label>Unidad base</label><select id="unit"><option value="g">Gramo (g)</option><option value="ml">Mililitro (ml)</option><option value="unidad">Unidad</option></select></div>
+<div><label>Precio de compra ($)</label><input id="price" type="number" min="0" step=".01"></div>
+<div><label>Cantidad comprada en unidad base</label><input id="qty" type="number" min=".01" step=".01" placeholder="Ej. 1000"></div>
+<div><label>Existencia actual</label><input id="stock" type="number" min="0" step=".01"></div>
+<div><label>Stock mínimo</label><input id="min" type="number" min="0" step=".01"></div>
+</div><button class="primary" onclick="addI()">Guardar insumo</button></div>
+<div class="card"><b>Mis insumos</b><div id="ilist" class="sub">Aún no hay insumos.</div></div>
+</section>
+<section id="recetas" class="hidden">
+<h2>Recetario</h2><p class="sub">Registra las preparaciones y sus notas técnicas.</p>
+<div class="card"><label>Nombre de receta</label><input id="rname" placeholder="Ej. Pastel de fresas con crema"><label>Descripción y notas</label><textarea id="rnotes" rows="3" placeholder="Rendimiento, proceso, conservación..."></textarea><button class="primary" onclick="addR()">Guardar receta</button></div>
+<div class="card"><b>Mis recetas</b><div id="rlist" class="sub">Aún no hay recetas.</div></div>
+</section>
+<section id="costos" class="hidden">
+<h2>Calculadora profesional de costos</h2><p class="sub">Costea una receta completa con varios ingredientes, mano de obra y gastos de producción.</p>
+<div class="card">
+<label>Receta que vas a costear</label><select id="recipeSelect"></select>
+<div class="note">Primero registra la receta en Recetario y sus materias primas en Insumos. Cada cantidad utilizada debe estar expresada en la unidad base del insumo (g, ml o unidad).</div>
+<b>Ingredientes de esta producción</b><div id="costRows"></div>
+<button class="secondary" onclick="addCostRow()">+ Agregar ingrediente</button>
+<div class="grid" style="margin-top:12px">
+<div><label>Mano de obra ($)</label><input id="labor" type="number" min="0" step=".01" value="0"></div>
+<div><label>Electricidad ($)</label><input id="electricity" type="number" min="0" step=".01" value="0"></div>
+<div><label>Gas ($)</label><input id="gas" type="number" min="0" step=".01" value="0"></div>
+<div><label>Empaque ($)</label><input id="packaging" type="number" min="0" step=".01" value="0"></div>
+<div><label>Otros gastos ($)</label><input id="other" type="number" min="0" step=".01" value="0"></div>
+<div><label>Porciones / unidades obtenidas</label><input id="portions" type="number" min="1" step="1" value="1"></div>
+<div><label>Margen de ganancia (%)</label><input id="margin" type="number" min="0" max="99" step="1" value="50"></div>
+</div>
+<button class="primary" onclick="calculateRecipe()">Calcular costo completo</button>
+<div id="costResult" class="total hidden"></div>
+</div>
+<div class="card"><b>Historial de costeos guardados</b><div id="costHistory" class="sub">Todavía no hay costeos guardados.</div></div>
+</section>
+<section id="respaldo" class="hidden">
+<h2>Respaldo</h2><div class="card"><p class="sub">Los datos se guardan en este navegador. Descarga una copia periódicamente, especialmente antes de cambiar de teléfono o navegador.</p>
+<button class="primary" onclick="backup()">Descargar respaldo JSON</button> <button class="secondary" onclick="document.getElementById('file').click()">Restaurar</button>
+<input id="file" class="hidden" type="file" accept="application/json" onchange="restore(event)">
+<div class="note">Esta versión todavía guarda los datos localmente en el navegador de este dispositivo; no sincroniza automáticamente con otros teléfonos.</div></div>
+</section>
+</main>
+<script>
+const K='marinas_pasteleria_v1';
+let db=JSON.parse(localStorage.getItem(K)||'{"ingredients":[],"recipes":[]}');
+db.ingredients=db.ingredients||[];db.recipes=db.recipes||[];db.costings=db.costings||[];
+let lastCalculation=null;
+function save(){localStorage.setItem(K,JSON.stringify(db));render()}
+function show(id){document.querySelectorAll('main section').forEach(s=>s.classList.toggle('hidden',s.id!==id));document.querySelectorAll('nav button').forEach(b=>b.classList.toggle('active',b.dataset.tab===id));if(id==='costos'){fillRecipeSelect();if(!document.querySelector('#costRows .ingredient-row'))addCostRow()}window.scrollTo(0,0)}
+document.querySelectorAll('nav button').forEach(b=>b.onclick=()=>show(b.dataset.tab));
+function money(n){return '$'+Number(n||0).toFixed(2)}
+function addI(){let n=iname.value.trim(),p=+price.value,q=+qty.value,s=+stock.value;if(!n||p<0||q<=0||s<0){alert('Completa nombre, precio, cantidad y existencia.');return}db.ingredients.push({id:Date.now(),name:n,unit:unit.value,price:p,qty:q,stock:s,min:+min.value||0,cost:p/q});['iname','price','qty','stock','min'].forEach(x=>document.getElementById(x).value='');save()}
+function addR(){let n=rname.value.trim();if(!n){alert('Escribe el nombre de la receta.');return}db.recipes.push({id:Date.now(),name:n,notes:rnotes.value.trim()});rname.value='';rnotes.value='';save()}
+function del(t,id){if(confirm('¿Eliminar este registro?')){db[t]=db[t].filter(x=>x.id!==id);save()}}
 function esc(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
-function fill(){ci.innerHTML=db.ingredients.map(x=>`<option value="${x.id}">${esc(x.name)} · $${x.cost.toFixed(4)}/${x.unit}</option>`).join('')||'<option value="">Registra un insumo primero</option>'}
-function render(){mi.textContent=db.ingredients.length;mr.textContent=db.recipes.length;mv.textContent='$'+db.ingredients.reduce((a,x)=>a+x.stock*x.cost,0).toFixed(2);mc.textContent='0';ilist.innerHTML=db.ingredients.map(x=>`<div class="item"><div><b>${esc(x.name)}</b><div class="muted">${x.stock} ${x.unit} · $${x.cost.toFixed(4)}/${x.unit} ${x.stock<=x.min?'· STOCK BAJO':''}</div></div><button class="danger" onclick="del('ingredients',${x.id})">Eliminar</button></div>`).join('')||'Aún no hay insumos.';rlist.innerHTML=db.recipes.map(x=>`<div class="item"><div><b>${esc(x.name)}</b><div class="muted">${esc(x.notes||'Sin notas')}</div></div><button class="danger" onclick="del('recipes',${x.id})">Eliminar</button></div>`).join('')||'Aún no hay recetas.';fill()}
-function calc(){let x=db.ingredients.find(x=>x.id==ci.value),q=+used.value,m=+margin.value;if(!x||q<=0||m<0||m>=100){alert('Verifica insumo, cantidad y margen (menor de 100%).');return}let ing=q*x.cost,total=ing+(+labor.value||0)+(+other.value||0),por=Math.max(1,+portions.value||1),sell=total/(1-m/100);result.classList.remove('hidden');result.innerHTML=`Costo ingrediente: <b>$${ing.toFixed(2)}</b><br>Costo total: <b>$${total.toFixed(2)}</b><br>Costo por porción: <b>$${(total/por).toFixed(2)}</b><br>Precio sugerido total: <b>$${sell.toFixed(2)}</b><br>Precio sugerido por porción: <b>$${(sell/por).toFixed(2)}</b>`}
+function fillRecipeSelect(){recipeSelect.innerHTML=db.recipes.map(r=>`<option value="${r.id}">${esc(r.name)}</option>`).join('')||'<option value="">Primero registra una receta</option>'}
+function addCostRow(selectedId='',quantity=''){let wrap=document.createElement('div');wrap.className='ingredient-row';let opts=db.ingredients.map(i=>`<option value="${i.id}" ${String(i.id)===String(selectedId)?'selected':''}>${esc(i.name)} (${i.unit})</option>`).join('');wrap.innerHTML=`<select class="row-ingredient">${opts||'<option value="">Registra insumos primero</option>'}</select><input class="row-quantity" type="number" min=".01" step=".01" placeholder="Cantidad" value="${quantity}"><button class="danger" type="button" aria-label="Quitar ingrediente">X</button>`;wrap.querySelector('button').onclick=()=>wrap.remove();costRows.appendChild(wrap)}
+function calculateRecipe(){let recipe=db.recipes.find(r=>String(r.id)===String(recipeSelect.value));if(!recipe){alert('Primero crea una receta en Recetario.');return}
+let rows=[...document.querySelectorAll('#costRows .ingredient-row')],items=[],bad=false;
+rows.forEach(row=>{let ing=db.ingredients.find(i=>String(i.id)===String(row.querySelector('select').value)),q=+row.querySelector('input').value;if(!ing||q<=0){bad=true;return}items.push({id:ing.id,name:ing.name,unit:ing.unit,quantity:q,unitCost:ing.cost,cost:q*ing.cost})});
+if(bad||!items.length){alert('Agrega al menos un ingrediente y una cantidad válida en cada fila.');return}
+let extras={labor:+labor.value||0,electricity:+electricity.value||0,gas:+gas.value||0,packaging:+packaging.value||0,other:+other.value||0},ingredientTotal=items.reduce((s,x)=>s+x.cost,0),extraTotal=Object.values(extras).reduce((s,x)=>s+x,0),total=ingredientTotal+extraTotal,portions=Math.max(1,+document.getElementById('portions').value||1),margin=+document.getElementById('margin').value;
+if(margin<0||margin>=100){alert('El margen debe ser de 0 a 99%.');return}
+let suggested=total/(1-margin/100),record={id:Date.now(),recipeId:recipe.id,recipeName:recipe.name,date:new Date().toISOString(),items,extras,ingredientTotal,extraTotal,total,portions,margin,suggested,unitCost:total/portions,unitPrice:suggested/portions};
+db.costings.unshift(record);save();lastCalculation=record;
+costResult.classList.remove('hidden');costResult.innerHTML=`<div class="label">Resultado para ${esc(recipe.name)}</div><strong>${money(total)}</strong><p>Ingredientes (${items.length}): <b>${money(ingredientTotal)}</b><br>Mano de obra y gastos: <b>${money(extraTotal)}</b><br>Costo total de producción: <b>${money(total)}</b><br>Costo por porción/unidad: <b>${money(record.unitCost)}</b><br>Precio sugerido total (margen ${margin}%): <b>${money(suggested)}</b><br>Precio sugerido por porción: <b>${money(record.unitPrice)}</b></p><button class="secondary" onclick="printCost(${record.id})">Imprimir / guardar PDF</button>`;
+}
+function printCost(id){let x=db.costings.find(c=>c.id===id);if(!x)return;let w=window.open('','_blank');if(!w){alert('Permite ventanas emergentes para imprimir el costeo.');return}w.document.write(`<html><head><title>Costeo ${esc(x.recipeName)}</title></head><body style="font-family:Arial;padding:24px"><h1>Marina’s Pastelería</h1><h2>Costeo: ${esc(x.recipeName)}</h2><p>Fecha: ${new Date(x.date).toLocaleString('es-SV')}</p><h3>Ingredientes</h3><ul>${x.items.map(i=>`<li>${esc(i.name)}: ${i.quantity} ${i.unit} × ${money(i.unitCost)} = ${money(i.cost)}</li>`).join('')}</ul><p>Ingredientes: ${money(x.ingredientTotal)}<br>Gastos adicionales: ${money(x.extraTotal)}<br><b>Costo total: ${money(x.total)}</b><br>Costo por porción: ${money(x.unitCost)}<br>Precio sugerido total: ${money(x.suggested)}<br>Precio sugerido por porción: ${money(x.unitPrice)}</p><script>window.onload=()=>window.print()<\/script></body></html>`);w.document.close()}
+function render(){mi.textContent=db.ingredients.length;mr.textContent=db.recipes.length;mv.textContent=money(db.ingredients.reduce((a,x)=>a+x.stock*x.cost,0));mc.textContent=db.costings.length;
+ilist.innerHTML=db.ingredients.map(x=>`<div class="item"><div><b>${esc(x.name)}</b><div class="muted">${x.stock} ${x.unit} · ${money(x.cost)}/${x.unit} ${x.stock<=x.min?'· STOCK BAJO':''}</div></div><button class="danger" onclick="del('ingredients',${x.id})">Eliminar</button></div>`).join('')||'Aún no hay insumos.';
+rlist.innerHTML=db.recipes.map(x=>`<div class="item"><div><b>${esc(x.name)}</b><div class="muted">${esc(x.notes||'Sin notas')}</div></div><button class="danger" onclick="del('recipes',${x.id})">Eliminar</button></div>`).join('')||'Aún no hay recetas.';
+costHistory.innerHTML=db.costings.map(x=>`<div class="item"><div><b>${esc(x.recipeName)}</b><div class="muted">${new Date(x.date).toLocaleDateString('es-SV')} · Costo ${money(x.total)} · Precio sugerido ${money(x.suggested)}</div></div></div>`).join('')||'Todavía no hay costeos guardados.';
+fillRecipeSelect()}
 function backup(){let a=document.createElement('a'),u=URL.createObjectURL(new Blob([JSON.stringify(db,null,2)],{type:'application/json'}));a.href=u;a.download='respaldo-marinas-pasteleria.json';a.click();URL.revokeObjectURL(u)}
-function restore(e){let f=e.target.files[0];if(!f)return;let r=new FileReader();r.onload=()=>{try{let d=JSON.parse(r.result);if(!Array.isArray(d.ingredients)||!Array.isArray(d.recipes))throw 0;db=d;save();alert('Respaldo restaurado.')}catch(_){alert('Archivo no válido.')}};r.readAsText(f)}
-render();</script></body></html>
+function restore(e){let f=e.target.files[0];if(!f)return;let r=new FileReader();r.onload=()=>{try{let d=JSON.parse(r.result);if(!Array.isArray(d.ingredients)||!Array.isArray(d.recipes))throw 0;d.costings=d.costings||[];db=d;save();alert('Respaldo restaurado.')}catch(_){alert('Archivo no válido.')}};r.readAsText(f)}
+render();
+</script></body></html>
