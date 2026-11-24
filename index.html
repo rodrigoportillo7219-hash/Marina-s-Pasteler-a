@@ -23,7 +23,7 @@ input,select,textarea{width:100%;padding:11px;border:1px solid var(--line);borde
 </style></head><body>
 <header><small>PASTELERÍA ARTESANAL · HECHO CON AMOR</small><h1>Marina’s Pastelería</h1><p>Tu taller, tus recetas y tus números en un solo lugar.</p></header>
 <nav>
-<button class="active" data-tab="inicio">Inicio</button><button data-tab="insumos">Insumos</button><button data-tab="recetas">Recetas</button><button data-tab="costos">Costeo profesional</button><button data-tab="respaldo">Respaldo</button>
+<button class="active" data-tab="inicio">Inicio</button><button data-tab="insumos">Insumos</button><button data-tab="recetas">Recetas</button><button data-tab="costos">Costeo profesional</button><button data-tab="respaldo">Respaldo</button><button data-tab="marina">Marina’s AI</button>
 </nav><main>
 <section id="inicio">
 <h2>Panel de trabajo</h2><p class="sub">Bienvenido a tu espacio de producción.</p>
@@ -71,6 +71,18 @@ input,select,textarea{width:100%;padding:11px;border:1px solid var(--line);borde
 </div>
 <div class="card"><b>Historial de costeos guardados</b><div id="costHistory" class="sub">Todavía no hay costeos guardados.</div></div>
 </section>
+<section id="marina" class="hidden">
+<h2>Marina’s AI</h2><p class="sub">Asistente de voz de Marina’s Pastelería. Puedes hablarle o escribirle.</p>
+<div class="card" style="text-align:center;padding:22px">
+<div style="width:112px;height:112px;border-radius:100%;background:#405846;color:#e3c77e;display:grid;place-items:center;margin:8px auto 14px;font-size:42px">🎙️</div>
+<h3 style="font:22px Georgia;color:#405846;margin:5px">Hola, Rodrigo</h3>
+<p class="sub" id="marinaStatus">Pulsa el micrófono y dame una instrucción.</p>
+<button class="primary" id="marinaMic" onclick="startMarinaListening()">🎙️ Hablar con Marina</button>
+<div style="margin-top:12px;text-align:left"><label>O escribe tu instrucción</label><input id="marinaText" placeholder="Ej. ¿Cuántos insumos tengo?"><button class="secondary" onclick="handleMarinaText()">Enviar a Marina</button></div>
+<div class="total" style="text-align:left;margin-top:16px"><b>Conversación</b><p id="marinaReply" class="sub">Marina: Estoy lista para ayudarte con tu pastelería.</p></div>
+</div>
+<div class="card"><b>Instrucciones que puedes probar</b><ul class="sub"><li>«Marina, ¿cuántos insumos tengo?»</li><li>«Marina, ¿cuántas recetas tengo?»</li><li>«Marina, abre insumos»</li><li>«Marina, abre recetas»</li><li>«Marina, abre costeo»</li><li>«Marina, registra receta pastel de fresas»</li></ul><div class="note">Esta primera versión reconoce comandos en español y responde con voz cuando el navegador lo permite. La conversación inteligente abierta y las acciones más avanzadas se añadirán en una siguiente etapa.</div></div>
+</section>
 <section id="respaldo" class="hidden">
 <h2>Respaldo</h2><div class="card"><p class="sub">Los datos se guardan en este navegador. Descarga una copia periódicamente, especialmente antes de cambiar de teléfono o navegador.</p>
 <button class="primary" onclick="backup()">Descargar respaldo JSON</button> <button class="secondary" onclick="document.getElementById('file').click()">Restaurar</button>
@@ -111,5 +123,35 @@ costHistory.innerHTML=db.costings.map(x=>`<div class="item"><div><b>${esc(x.reci
 fillRecipeSelect()}
 function backup(){let a=document.createElement('a'),u=URL.createObjectURL(new Blob([JSON.stringify(db,null,2)],{type:'application/json'}));a.href=u;a.download='respaldo-marinas-pasteleria.json';a.click();URL.revokeObjectURL(u)}
 function restore(e){let f=e.target.files[0];if(!f)return;let r=new FileReader();r.onload=()=>{try{let d=JSON.parse(r.result);if(!Array.isArray(d.ingredients)||!Array.isArray(d.recipes))throw 0;d.costings=d.costings||[];db=d;save();alert('Respaldo restaurado.')}catch(_){alert('Archivo no válido.')}};r.readAsText(f)}
+
+let marinaRecognition=null;
+function marinaSpeak(message){
+  document.getElementById('marinaReply').textContent='Marina: '+message;
+  if('speechSynthesis' in window){window.speechSynthesis.cancel();let u=new SpeechSynthesisUtterance(message);u.lang='es-SV';u.rate=1;window.speechSynthesis.speak(u)}
+}
+function startMarinaListening(){
+ const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+ if(!SR){marinaSpeak('Tu navegador no ofrece reconocimiento de voz en este momento. Puedes escribirme en el cuadro de texto.');return}
+ marinaRecognition=new SR();marinaRecognition.lang='es-SV';marinaRecognition.interimResults=false;marinaRecognition.maxAlternatives=1;
+ document.getElementById('marinaStatus').textContent='Te estoy escuchando…';
+ marinaRecognition.onresult=e=>{let t=e.results[0][0].transcript;document.getElementById('marinaText').value=t;processMarina(t)};
+ marinaRecognition.onerror=()=>{document.getElementById('marinaStatus').textContent='No pude escuchar. Intenta otra vez o escribe tu instrucción.'};
+ marinaRecognition.onend=()=>{document.getElementById('marinaStatus').textContent='Pulsa el micrófono para hablar de nuevo.'};
+ try{marinaRecognition.start()}catch(e){document.getElementById('marinaStatus').textContent='El micrófono está ocupado. Intenta de nuevo.'}
+}
+function handleMarinaText(){let t=document.getElementById('marinaText').value.trim();if(t)processMarina(t)}
+function processMarina(raw){
+ let t=raw.toLowerCase().replace(/[¿?¡!.,]/g,'').trim();
+ if(t.includes('cuántos insumos')||t.includes('cuantos insumos')||t.includes('inventario')){marinaSpeak('Tienes '+db.ingredients.length+' insumos registrados.');return}
+ if(t.includes('cuántas recetas')||t.includes('cuantas recetas')){marinaSpeak('Tienes '+db.recipes.length+' recetas registradas.');return}
+ if(t.includes('cuántos costeos')||t.includes('cuantos costeos')){marinaSpeak('Tienes '+db.costings.length+' costeos guardados.');return}
+ if(t.includes('abre insumos')||t.includes('ir a insumos')){show('insumos');marinaSpeak('Abriendo la sección de insumos.');return}
+ if(t.includes('abre recetas')||t.includes('ir a recetas')){show('recetas');marinaSpeak('Abriendo el recetario.');return}
+ if(t.includes('abre costeo')||t.includes('ir a costeo')){show('costos');marinaSpeak('Abriendo el costeo profesional.');return}
+ let recipeMatch=t.match(/(?:registra|agrega|crear|crea) receta (.+)/);
+ if(recipeMatch){let name=recipeMatch[1].trim();if(name){db.recipes.push({id:Date.now(),name:name.replace(/^de /,''),notes:'Registrada por Marina’s AI'});save();marinaSpeak('He registrado la receta '+name+'.');show('marina');return}}
+ marinaSpeak('Todavía no tengo un comando para hacer eso. Puedes preguntarme cuántos insumos o recetas tienes, pedirme abrir una sección o decir registra receta seguido del nombre.');
+}
+
 render();
 </script></body></html>
